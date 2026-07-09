@@ -11,7 +11,7 @@ extension Bit {
     @Suite
     enum Test {
         @Suite struct Unit {}
-        @Suite struct EdgeCase {}
+        @Suite struct `Edge Case` {}
         @Suite struct Integration {}
         @Suite(.serialized) struct Performance {}
     }
@@ -241,7 +241,7 @@ extension Bit.Test.Unit {
 
 // MARK: - Edge Case Tests
 
-extension Bit.Test.EdgeCase {
+extension Bit.Test.`Edge Case` {
     @Test
     func `failable init returns nil for invalid values`() {
         #expect(Bit(UInt8(2)) == nil)
