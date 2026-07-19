@@ -28,14 +28,31 @@ extension FixedWidthInteger {
     ///
     /// - Parameters:
     ///   - value: The value to rotate
-    ///   - count: Number of positions to rotate left
+    ///   - count: Number of positions to rotate left. May be negative (rotates
+    ///     right) or larger in magnitude than `bitWidth` (normalized modulo
+    ///     `bitWidth` via a Euclidean remainder, so the result is always a
+    ///     genuine rotation, never a sign-extended shift).
     /// - Returns: The value with bits rotated left
     @inlinable
     public static func rotateLeft(_ value: Self, by count: Int) -> Self {
-        let shift = count % Self.bitWidth
+        let width = Self.bitWidth
+        // Euclidean remainder: Swift's `%` can return a negative result for a
+        // negative `count` (e.g. -1 % 8 == -1), and the masking `<<`/`>>`
+        // operators treat a negative or out-of-range shift amount specially
+        // rather than rotating — so normalize into 0..<width first.
+        let shift = ((count % width) + width) % width
         guard shift != 0 else { return value }
 
-        return (value << shift) | (value >> (Self.bitWidth - shift))
+        // Rotate over the type's unsigned bit pattern. `Self.Magnitude`'s `>>`
+        // is a logical (zero-filling) shift even when `Self` itself is signed,
+        // where the standard arithmetic (sign-extending) `>>` on `Self` would
+        // smear the sign bit into the rotated-in positions and corrupt the
+        // result. `Magnitude(truncatingIfNeeded:)` / `Self(truncatingIfNeeded:)`
+        // between a fixed-width type and its same-width `Magnitude` reinterpret
+        // the bits rather than clamping, so no information is lost.
+        let bits = Magnitude(truncatingIfNeeded: value)
+        let rotated = (bits << shift) | (bits >> (width - shift))
+        return Self(truncatingIfNeeded: rotated)
     }
 
     /// Rotates bits left by the specified count.
@@ -75,14 +92,23 @@ extension FixedWidthInteger {
     ///
     /// - Parameters:
     ///   - value: The value to rotate
-    ///   - count: Number of positions to rotate right
+    ///   - count: Number of positions to rotate right. May be negative (rotates
+    ///     left) or larger in magnitude than `bitWidth` (normalized modulo
+    ///     `bitWidth` via a Euclidean remainder, so the result is always a
+    ///     genuine rotation, never a sign-extended shift).
     /// - Returns: The value with bits rotated right
     @inlinable
     public static func rotateRight(_ value: Self, by count: Int) -> Self {
-        let shift = count % Self.bitWidth
+        let width = Self.bitWidth
+        // See `rotateLeft(_:by:)` for why the count is normalized with a
+        // Euclidean remainder and the rotation is performed over the unsigned
+        // bit pattern rather than `Self` directly.
+        let shift = ((count % width) + width) % width
         guard shift != 0 else { return value }
 
-        return (value >> shift) | (value << (Self.bitWidth - shift))
+        let bits = Magnitude(truncatingIfNeeded: value)
+        let rotated = (bits >> shift) | (bits << (width - shift))
+        return Self(truncatingIfNeeded: rotated)
     }
 
     /// Rotates bits right by the specified count.

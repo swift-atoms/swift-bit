@@ -203,3 +203,114 @@ extension `FixedWidthInteger+Bit Tests`.Unit {
         #expect(reversed == -256)
     }
 }
+
+// MARK: - Edge Case Tests
+
+/// Regression coverage for F-003: rotateLeft/rotateRight silently returned
+/// non-rotations for negative counts (the `%` remainder can be negative, and
+/// Swift's masking `<<`/`>>` treat a negative shift amount as a shift in the
+/// opposite direction) and for signed carrier types (the standard `>>` on a
+/// signed integer sign-extends instead of shifting in zero bits).
+extension `FixedWidthInteger+Bit Tests`.`Edge Case` {
+
+    // MARK: - Negative counts
+
+    @Test(arguments: [
+        (0b11010011 as UInt8, -1, 0b11101001 as UInt8),  // left by -1 == right by 1
+        (0b11010011 as UInt8, -2, 0b11110100 as UInt8),  // left by -2 == right by 2
+        (0b11010011 as UInt8, -8, 0b11010011 as UInt8),  // left by -bitWidth == identity
+        (0b11010011 as UInt8, -9, 0b11101001 as UInt8),  // left by -9 == right by 1
+    ])
+    func `rotateLeft with negative count matches equivalent positive rotateRight`(testCase: (UInt8, Int, UInt8)) {
+        let (value, count, expected) = testCase
+        #expect(value.rotateLeft(by: count) == expected)
+    }
+
+    @Test(arguments: [
+        (0b11010011 as UInt8, -1, 0b10100111 as UInt8),  // right by -1 == left by 1
+        (0b11010011 as UInt8, -2, 0b01001111 as UInt8),  // right by -2 == left by 2
+        (0b11010011 as UInt8, -8, 0b11010011 as UInt8),  // right by -bitWidth == identity
+        (0b11010011 as UInt8, -9, 0b10100111 as UInt8),  // right by -9 == left by 1
+    ])
+    func `rotateRight with negative count matches equivalent positive rotateLeft`(testCase: (UInt8, Int, UInt8)) {
+        let (value, count, expected) = testCase
+        #expect(value.rotateRight(by: count) == expected)
+    }
+
+    @Test
+    func `rotateLeft and rotateRight by negative count are mutual inverses`() {
+        let value: UInt16 = 0b1101_0011_1010_0110
+        #expect(value.rotateLeft(by: -5).rotateRight(by: -5) == value)
+        #expect(value.rotateRight(by: -5).rotateLeft(by: -5) == value)
+    }
+
+    // MARK: - Counts beyond bitWidth (including negative multiples)
+
+    @Test
+    func `rotateLeft by count far beyond bitWidth normalizes correctly`() {
+        let value: UInt8 = 0b11010011
+        #expect(value.rotateLeft(by: 100) == value.rotateLeft(by: 100 % 8))
+        #expect(value.rotateLeft(by: -100) == value.rotateLeft(by: -100 % 8 + 8))
+    }
+
+    @Test
+    func `rotateRight by count far beyond bitWidth normalizes correctly`() {
+        let value: UInt8 = 0b11010011
+        #expect(value.rotateRight(by: 100) == value.rotateRight(by: 100 % 8))
+        #expect(value.rotateRight(by: -100) == value.rotateRight(by: -100 % 8 + 8))
+    }
+
+    // MARK: - Signed carriers
+
+    @Test
+    func `rotateLeft on negative Int8 does not sign-extend into the result`() {
+        let value: Int8 = -1  // 0b11111111
+        #expect(value.rotateLeft(by: 1) == -1)
+        #expect(value.rotateLeft(by: 4) == -1)
+    }
+
+    @Test
+    func `rotateRight on negative Int8 does not sign-extend into the result`() {
+        let value: Int8 = -1  // 0b11111111
+        #expect(value.rotateRight(by: 1) == -1)
+        #expect(value.rotateRight(by: 4) == -1)
+    }
+
+    @Test
+    func `rotateLeft on signed Int8 matches unsigned bit-pattern rotation`() {
+        let signed: Int8 = -100  // bit pattern 0b10011100
+        let unsigned = UInt8(bitPattern: signed)
+
+        for count in -10...10 {
+            let rotatedSigned = signed.rotateLeft(by: count)
+            let rotatedUnsigned = unsigned.rotateLeft(by: count)
+            #expect(UInt8(bitPattern: rotatedSigned) == rotatedUnsigned)
+        }
+    }
+
+    @Test
+    func `rotateRight on signed Int8 matches unsigned bit-pattern rotation`() {
+        let signed: Int8 = -100  // bit pattern 0b10011100
+        let unsigned = UInt8(bitPattern: signed)
+
+        for count in -10...10 {
+            let rotatedSigned = signed.rotateRight(by: count)
+            let rotatedUnsigned = unsigned.rotateRight(by: count)
+            #expect(UInt8(bitPattern: rotatedSigned) == rotatedUnsigned)
+        }
+    }
+
+    @Test
+    func `rotateLeft on negative Int16 preserves nonzero bit count`() {
+        let value: Int16 = -12345
+        let rotated = value.rotateLeft(by: 7)
+        #expect(rotated.nonzeroBitCount == value.nonzeroBitCount)
+    }
+
+    @Test
+    func `rotateRight on negative Int32 preserves nonzero bit count`() {
+        let value: Int32 = -987_654_321
+        let rotated = value.rotateRight(by: 11)
+        #expect(rotated.nonzeroBitCount == value.nonzeroBitCount)
+    }
+}
