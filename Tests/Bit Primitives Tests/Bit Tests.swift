@@ -256,18 +256,18 @@ extension Bit.Test.Performance {
     @Test
     func `boolean operation throughput`() {
         // Warmup
-        for _ in 0..<100 {
+        (0..<100).forEach { _ in
             var result: Bit = .zero
-            for i: UInt8 in 0..<100 {
+            (UInt8(0)..<100).forEach { i in
                 result = result ^ Bit(normalizing: i & 1)
             }
             _ = result
         }
 
         // Measured iterations
-        for _ in 0..<1000 {
+        (0..<1000).forEach { _ in
             var result: Bit = .zero
-            for i: UInt8 in 0..<100 {
+            (UInt8(0)..<100).forEach { i in
                 result = result ^ Bit(normalizing: i & 1)
             }
             _ = result

@@ -8,6 +8,10 @@ import Testing
 // 0b1010_1100 — set bits at positions 2, 3, 5, 7.
 @Suite
 struct `Bit Pattern Ones Tests` {
+    @Suite struct Unit {}
+    @Suite struct `Edge Case` {}
+    @Suite struct Integration {}
+
     let sample: UInt8 = 0b1010_1100
 
     @Test

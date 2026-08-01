@@ -8,6 +8,10 @@ import Testing
 // 0b1010_1100 — clear bits at positions 0, 1, 4, 6 (complement: 0b0101_0011).
 @Suite
 struct `Bit Pattern Zeros Tests` {
+    @Suite struct Unit {}
+    @Suite struct `Edge Case` {}
+    @Suite struct Integration {}
+
     let sample: UInt8 = 0b1010_1100
 
     @Test
@@ -49,7 +53,7 @@ struct `Bit Pattern Zeros Tests` {
     func `rank0 plus rank1 equals the bound (symbol completeness)`() {
         let ones = Bit.Pattern<UInt8>.Ones(sample)
         let zeros = Bit.Pattern<UInt8>.Zeros(sample)
-        for bound in 0...8 {
+        (0...8).forEach { bound in
             #expect(zeros.rank(below: bound) + ones.rank(below: bound) == bound)
         }
     }

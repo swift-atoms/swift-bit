@@ -281,7 +281,7 @@ extension `FixedWidthInteger+Bit Tests`.`Edge Case` {
         let signed: Int8 = -100  // bit pattern 0b10011100
         let unsigned = UInt8(bitPattern: signed)
 
-        for count in -10...10 {
+        (-10...10).forEach { count in
             let rotatedSigned = signed.rotateLeft(by: count)
             let rotatedUnsigned = unsigned.rotateLeft(by: count)
             #expect(UInt8(bitPattern: rotatedSigned) == rotatedUnsigned)
@@ -293,7 +293,7 @@ extension `FixedWidthInteger+Bit Tests`.`Edge Case` {
         let signed: Int8 = -100  // bit pattern 0b10011100
         let unsigned = UInt8(bitPattern: signed)
 
-        for count in -10...10 {
+        (-10...10).forEach { count in
             let rotatedSigned = signed.rotateRight(by: count)
             let rotatedUnsigned = unsigned.rotateRight(by: count)
             #expect(UInt8(bitPattern: rotatedSigned) == rotatedUnsigned)
