@@ -221,7 +221,9 @@ extension `FixedWidthInteger+Bit Tests`.`Edge Case` {
         (0b11010011 as UInt8, -8, 0b11010011 as UInt8),  // left by -bitWidth == identity
         (0b11010011 as UInt8, -9, 0b11101001 as UInt8),  // left by -9 == right by 1
     ])
-    func `rotateLeft with negative count matches equivalent positive rotateRight`(testCase: (UInt8, Int, UInt8)) {
+    func `rotateLeft with negative count matches equivalent positive rotateRight`(
+        testCase: (UInt8, Int, UInt8)
+    ) {
         let (value, count, expected) = testCase
         #expect(value.rotateLeft(by: count) == expected)
     }
@@ -232,7 +234,9 @@ extension `FixedWidthInteger+Bit Tests`.`Edge Case` {
         (0b11010011 as UInt8, -8, 0b11010011 as UInt8),  // right by -bitWidth == identity
         (0b11010011 as UInt8, -9, 0b10100111 as UInt8),  // right by -9 == left by 1
     ])
-    func `rotateRight with negative count matches equivalent positive rotateLeft`(testCase: (UInt8, Int, UInt8)) {
+    func `rotateRight with negative count matches equivalent positive rotateLeft`(
+        testCase: (UInt8, Int, UInt8)
+    ) {
         let (value, count, expected) = testCase
         #expect(value.rotateRight(by: count) == expected)
     }
