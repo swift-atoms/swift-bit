@@ -35,14 +35,6 @@ let package = Package(
     ],
     dependencies: [
         .package(
-            url: "https://github.com/swift-primitives/swift-comparison-primitives.git",
-            branch: "main"
-        ),
-        .package(
-            url: "https://github.com/swift-primitives/swift-equation-primitives.git",
-            branch: "main"
-        ),
-        .package(
             url: "https://github.com/swift-primitives/swift-hash-primitives.git",
             branch: "main"
         ),
@@ -54,8 +46,6 @@ let package = Package(
                 "Bit Primitive",
                 "Bit Pattern Primitives",
                 "Bit Primitives Standard Library Integration",
-                .product(name: "Comparison Primitives", package: "swift-comparison-primitives"),
-                .product(name: "Equation Primitives", package: "swift-equation-primitives"),
                 .product(name: "Hash Primitives", package: "swift-hash-primitives"),
             ]
         ),
