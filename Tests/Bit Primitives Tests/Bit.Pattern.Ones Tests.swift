@@ -1,11 +1,8 @@
-// Bit.Pattern.Ones Tests.swift
-
 import Bit_Primitives_Test_Support
 import Testing
 
 @testable import Bit_Primitives
 
-// 0b1010_1100 — set bits at positions 2, 3, 5, 7.
 @Suite
 struct `Bit Pattern Ones Tests` {
     @Suite struct Unit {}
@@ -28,7 +25,7 @@ struct `Bit Pattern Ones Tests` {
         #expect(ones.rank(below: 0) == 0)
         #expect(ones.rank(below: 4) == 2)
         #expect(ones.rank(below: 8) == 4)
-        #expect(ones.rank(below: 100) == 4)  // clamped to bitWidth
+        #expect(ones.rank(below: 100) == 4)
     }
 
     @Test

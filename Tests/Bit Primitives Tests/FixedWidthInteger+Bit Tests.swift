@@ -1,14 +1,8 @@
-// FixedWidthInteger+Bit Tests.swift
-
 import Bit_Primitives_Test_Support
 import Testing
 
 @testable import Bit_Primitives
 
-// MARK: - Test Suites
-
-/// Tests for FixedWidthInteger bit-rotation extensions - uses parallel namespace
-/// pattern since these are protocol extensions.
 @Suite
 struct `FixedWidthInteger+Bit Tests` {
     @Suite struct Unit {}
@@ -17,11 +11,7 @@ struct `FixedWidthInteger+Bit Tests` {
     @Suite(.serialized) struct Performance {}
 }
 
-// MARK: - Unit Tests
-
 extension `FixedWidthInteger+Bit Tests`.Unit {
-
-    // MARK: - rotateLeft(by:)
 
     @Test
     func `rotateLeft by zero returns original`() {
@@ -68,8 +58,6 @@ extension `FixedWidthInteger+Bit Tests`.Unit {
         #expect(rotated == 0b00000000_00111100)
     }
 
-    // MARK: - rotateRight(by:)
-
     @Test
     func `rotateRight by zero returns original`() {
         let value: UInt8 = 0b11010011
@@ -112,8 +100,6 @@ extension `FixedWidthInteger+Bit Tests`.Unit {
 
         #expect(value.nonzeroBitCount == rotated.nonzeroBitCount)
     }
-
-    // MARK: - reverseBits()
 
     @Test(arguments: [
         (0b11010011 as UInt8, 0b11001011 as UInt8),
@@ -158,8 +144,6 @@ extension `FixedWidthInteger+Bit Tests`.Unit {
         #expect(palindrome.reverseBits() == palindrome)
     }
 
-    // MARK: - Type-Specific Tests
-
     @Test
     func `UInt8 rotations`() {
         let value: UInt8 = 0b11010011
@@ -189,37 +173,28 @@ extension `FixedWidthInteger+Bit Tests`.Unit {
 
     @Test
     func `Int8 bits reverse`() {
-        let value: Int8 = 0b01010101  // 85
+        let value: Int8 = 0b01010101
         let reversed = value.reverseBits()
-        // Reversed would be 0b10101010 which is -86 in two's complement
+
         #expect(reversed == -86)
     }
 
     @Test
     func `Int16 bits reverse`() {
-        let value: Int16 = 0b00000000_11111111  // 255
+        let value: Int16 = 0b00000000_11111111
         let reversed = value.reverseBits()
-        // Reversed would be 0b1111111100000000 which is -256 in two's complement
+
         #expect(reversed == -256)
     }
 }
 
-// MARK: - Edge Case Tests
-
-/// Regression coverage for F-003: rotateLeft/rotateRight silently returned
-/// non-rotations for negative counts (the `%` remainder can be negative, and
-/// Swift's masking `<<`/`>>` treat a negative shift amount as a shift in the
-/// opposite direction) and for signed carrier types (the standard `>>` on a
-/// signed integer sign-extends instead of shifting in zero bits).
 extension `FixedWidthInteger+Bit Tests`.`Edge Case` {
 
-    // MARK: - Negative counts
-
     @Test(arguments: [
-        (0b11010011 as UInt8, -1, 0b11101001 as UInt8),  // left by -1 == right by 1
-        (0b11010011 as UInt8, -2, 0b11110100 as UInt8),  // left by -2 == right by 2
-        (0b11010011 as UInt8, -8, 0b11010011 as UInt8),  // left by -bitWidth == identity
-        (0b11010011 as UInt8, -9, 0b11101001 as UInt8),  // left by -9 == right by 1
+        (0b11010011 as UInt8, -1, 0b11101001 as UInt8),
+        (0b11010011 as UInt8, -2, 0b11110100 as UInt8),
+        (0b11010011 as UInt8, -8, 0b11010011 as UInt8),
+        (0b11010011 as UInt8, -9, 0b11101001 as UInt8),
     ])
     func `rotateLeft with negative count matches equivalent positive rotateRight`(
         testCase: (UInt8, Int, UInt8)
@@ -229,10 +204,10 @@ extension `FixedWidthInteger+Bit Tests`.`Edge Case` {
     }
 
     @Test(arguments: [
-        (0b11010011 as UInt8, -1, 0b10100111 as UInt8),  // right by -1 == left by 1
-        (0b11010011 as UInt8, -2, 0b01001111 as UInt8),  // right by -2 == left by 2
-        (0b11010011 as UInt8, -8, 0b11010011 as UInt8),  // right by -bitWidth == identity
-        (0b11010011 as UInt8, -9, 0b10100111 as UInt8),  // right by -9 == left by 1
+        (0b11010011 as UInt8, -1, 0b10100111 as UInt8),
+        (0b11010011 as UInt8, -2, 0b01001111 as UInt8),
+        (0b11010011 as UInt8, -8, 0b11010011 as UInt8),
+        (0b11010011 as UInt8, -9, 0b10100111 as UInt8),
     ])
     func `rotateRight with negative count matches equivalent positive rotateLeft`(
         testCase: (UInt8, Int, UInt8)
@@ -248,8 +223,6 @@ extension `FixedWidthInteger+Bit Tests`.`Edge Case` {
         #expect(value.rotateRight(by: -5).rotateLeft(by: -5) == value)
     }
 
-    // MARK: - Counts beyond bitWidth (including negative multiples)
-
     @Test
     func `rotateLeft by count far beyond bitWidth normalizes correctly`() {
         let value: UInt8 = 0b11010011
@@ -264,25 +237,23 @@ extension `FixedWidthInteger+Bit Tests`.`Edge Case` {
         #expect(value.rotateRight(by: -100) == value.rotateRight(by: -100 % 8 + 8))
     }
 
-    // MARK: - Signed carriers
-
     @Test
     func `rotateLeft on negative Int8 does not sign-extend into the result`() {
-        let value: Int8 = -1  // 0b11111111
+        let value: Int8 = -1
         #expect(value.rotateLeft(by: 1) == -1)
         #expect(value.rotateLeft(by: 4) == -1)
     }
 
     @Test
     func `rotateRight on negative Int8 does not sign-extend into the result`() {
-        let value: Int8 = -1  // 0b11111111
+        let value: Int8 = -1
         #expect(value.rotateRight(by: 1) == -1)
         #expect(value.rotateRight(by: 4) == -1)
     }
 
     @Test
     func `rotateLeft on signed Int8 matches unsigned bit-pattern rotation`() {
-        let signed: Int8 = -100  // bit pattern 0b10011100
+        let signed: Int8 = -100
         let unsigned = UInt8(bitPattern: signed)
 
         (-10...10).forEach { count in
@@ -294,7 +265,7 @@ extension `FixedWidthInteger+Bit Tests`.`Edge Case` {
 
     @Test
     func `rotateRight on signed Int8 matches unsigned bit-pattern rotation`() {
-        let signed: Int8 = -100  // bit pattern 0b10011100
+        let signed: Int8 = -100
         let unsigned = UInt8(bitPattern: signed)
 
         (-10...10).forEach { count in

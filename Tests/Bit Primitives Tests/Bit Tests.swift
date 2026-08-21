@@ -1,11 +1,7 @@
-// Bit Tests.swift
-
 import Bit_Primitives_Test_Support
 import Testing
 
 @testable import Bit_Primitives
-
-// MARK: - Test Suite Declaration
 
 extension Bit {
     @Suite
@@ -16,8 +12,6 @@ extension Bit {
         @Suite(.serialized) struct Performance {}
     }
 }
-
-// MARK: - Unit Tests
 
 extension Bit.Test.Unit {
     @Test
@@ -239,8 +233,6 @@ extension Bit.Test.Unit {
     }
 }
 
-// MARK: - Edge Case Tests
-
 extension Bit.Test.`Edge Case` {
     @Test
     func `failable init returns nil for invalid values`() {
@@ -250,12 +242,10 @@ extension Bit.Test.`Edge Case` {
     }
 }
 
-// MARK: - Performance Tests
-
 extension Bit.Test.Performance {
     @Test
     func `boolean operation throughput`() {
-        // Warmup
+
         (0..<100).forEach { _ in
             var result: Bit = .zero
             (UInt8(0)..<100).forEach { i in
@@ -264,7 +254,6 @@ extension Bit.Test.Performance {
             _ = result
         }
 
-        // Measured iterations
         (0..<1000).forEach { _ in
             var result: Bit = .zero
             (UInt8(0)..<100).forEach { i in

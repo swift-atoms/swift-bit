@@ -54,13 +54,6 @@ let package = Package(
             dependencies: []
         ),
 
-        // MARK: - Pattern
-        //
-        // Carrier-dependent bit-pattern operations (`Bit.Pattern<Carrier>`
-        // generic enum + nested `Mask` struct + ring operators, plus the
-        // `Ones`/`Zeros` rank/select word kernels). Leaf variant — zero
-        // external deps (uses only stdlib FixedWidthInteger & UnsignedInteger
-        // constraints over the carrier ring Z/2^w).
         .target(
             name: "Bit Pattern Primitives",
             dependencies: [

@@ -1,11 +1,8 @@
-// Bit.Pattern.Zeros Tests.swift
-
 import Bit_Primitives_Test_Support
 import Testing
 
 @testable import Bit_Primitives
 
-// 0b1010_1100 — clear bits at positions 0, 1, 4, 6 (complement: 0b0101_0011).
 @Suite
 struct `Bit Pattern Zeros Tests` {
     @Suite struct Unit {}
@@ -28,7 +25,7 @@ struct `Bit Pattern Zeros Tests` {
         #expect(zeros.rank(below: 0) == 0)
         #expect(zeros.rank(below: 4) == 2)
         #expect(zeros.rank(below: 8) == 4)
-        #expect(zeros.rank(below: 100) == 4)  // clamped to bitWidth
+        #expect(zeros.rank(below: 100) == 4)
     }
 
     @Test

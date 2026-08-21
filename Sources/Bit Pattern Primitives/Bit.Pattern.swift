@@ -1,61 +1,19 @@
-// ===----------------------------------------------------------------------===//
-//
-// This source file is part of the swift-bit-primitives open source project
-//
-// Copyright (c) 2024-2026 Coen ten Thije Boonkkamp and the swift-bit-primitives project authors
-// Licensed under Apache License v2.0
-//
-// See LICENSE for license information
-//
-// ===----------------------------------------------------------------------===//
-
 extension Bit {
-    /// Namespace for carrier-dependent bit-pattern operations.
-    ///
-    /// `Pattern` provides types for working with bitmasks and bitfields in a
-    /// specific fixed-width unsigned integer ring. All operations are well-defined
-    /// within the ring Z/2^w where w = `Carrier.bitWidth`.
-    ///
-    /// ## Example
-    ///
-    /// ```swift
-    /// typealias Pattern32 = Bit.Pattern<UInt32>
-    /// let flags: Pattern32.Mask = .lowBits(8)  // 0x000000FF
-    /// ```
-    ///
-    /// - Parameter Carrier: The fixed-width unsigned integer type for bit operations.
+
     public enum Pattern<Carrier: FixedWidthInteger & UnsignedInteger & Sendable> {}
 }
 
-// MARK: - Mask Constants
-
 extension Bit.Pattern.Mask {
-    /// The zero mask (no bits set).
+
     @inlinable
     public static var zero: Self { Self(0) }
 
-    /// The all-ones mask (all bits set).
     @inlinable
     public static var allOnes: Self { Self(~0) }
 }
 
-// MARK: - Mask Builders
-
 extension Bit.Pattern.Mask {
-    /// Creates a mask with `n` low bits set.
-    ///
-    /// - Parameter n: The number of low bits to set.
-    /// - Precondition: `n >= 0`
-    /// - Returns: `0` if `n == 0`, all ones if `n >= bitWidth`,
-    ///   otherwise `(1 << n) - 1`.
-    ///
-    /// ## Example
-    ///
-    /// ```swift
-    /// Mask.lowBits(0)   // 0x00000000
-    /// Mask.lowBits(8)   // 0x000000FF
-    /// Mask.lowBits(32)  // 0xFFFFFFFF (for UInt32)
-    /// ```
+
     @inlinable
     public static func lowBits(_ n: Int) -> Self {
         precondition(n >= 0, "n must be non-negative")
@@ -64,12 +22,6 @@ extension Bit.Pattern.Mask {
         return Self((Carrier(1) &<< n) &- 1)
     }
 
-    /// Creates a mask with `n` high bits set.
-    ///
-    /// - Parameter n: The number of high bits to set.
-    /// - Precondition: `n >= 0`
-    /// - Returns: `0` if `n == 0`, all ones if `n >= bitWidth`,
-    ///   otherwise the top n bits set.
     @inlinable
     public static func highBits(_ n: Int) -> Self {
         precondition(n >= 0, "n must be non-negative")
@@ -78,11 +30,6 @@ extension Bit.Pattern.Mask {
         return Self(~((Carrier(1) &<< (Carrier.bitWidth - n)) &- 1))
     }
 
-    /// Creates a mask with a single bit set at the given position.
-    ///
-    /// - Parameter position: The bit position (0 = LSB).
-    /// - Returns: A mask with only `position` set.
-    /// - Precondition: `0 <= position < bitWidth`
     @inlinable
     public static func bit(_ position: Int) -> Self {
         precondition(position >= 0 && position < Carrier.bitWidth, "Bit position out of bounds")
@@ -90,84 +37,65 @@ extension Bit.Pattern.Mask {
     }
 }
 
-// MARK: - Mask Operators
-
 extension Bit.Pattern.Mask {
-    /// Bitwise AND (intersection).
+
     @inlinable
     public static func & (lhs: Self, rhs: Self) -> Self {
         Self(lhs.underlying & rhs.underlying)
     }
 
-    /// Bitwise OR (union).
     @inlinable
     public static func | (lhs: Self, rhs: Self) -> Self {
         Self(lhs.underlying | rhs.underlying)
     }
 
-    /// Bitwise XOR (symmetric difference).
     @inlinable
     public static func ^ (lhs: Self, rhs: Self) -> Self {
         Self(lhs.underlying ^ rhs.underlying)
     }
 
-    /// Bitwise NOT (complement).
     @inlinable
     public static prefix func ~ (mask: Self) -> Self {
         Self(~mask.underlying)
     }
 }
 
-// MARK: - Mask Queries
-
 extension Bit.Pattern.Mask {
-    /// Returns `true` if all bits in `other` are set in this mask.
+
     @inlinable
     public func contains(_ other: Self) -> Bool {
         (underlying & other.underlying) == other.underlying
     }
 
-    /// Returns `true` if any bits in `other` are set in this mask.
     @inlinable
     public func intersects(_ other: Self) -> Bool {
         (underlying & other.underlying) != 0
     }
 
-    /// The number of bits set in this mask.
     @inlinable
     public var popcount: Int {
         underlying.nonzeroBitCount
     }
 
-    /// Returns `true` if no bits are set.
     @inlinable
     public var isEmpty: Bool {
         underlying == 0
     }
 }
 
-// MARK: - CustomStringConvertible
-
 extension Bit.Pattern.Mask: CustomStringConvertible {
-    /// A hexadecimal, `0x`-prefixed representation of the underlying bits.
+
     public var description: String {
         "0x" + String(underlying, radix: 16, uppercase: true)
     }
 }
 
-// MARK: - Platform Aliases
-
-/// 8-bit pattern operations.
 public typealias Pattern8 = Bit.Pattern<UInt8>
 
-/// 16-bit pattern operations.
 public typealias Pattern16 = Bit.Pattern<UInt16>
 
-/// 32-bit pattern operations.
 public typealias Pattern32 = Bit.Pattern<UInt32>
 
-/// 64-bit pattern operations.
 public typealias Pattern64 = Bit.Pattern<UInt64>
 
-/// Word-sized pattern operations (platform-dependent).
 public typealias PatternWord = Bit.Pattern<UInt>

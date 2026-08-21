@@ -1,11 +1,7 @@
-// Bit.Order Tests.swift
-
 import Bit_Primitives_Test_Support
 import Testing
 
 @testable import Bit_Primitives
-
-// MARK: - Test Suite Declaration
 
 extension Bit.Order {
     @Suite
@@ -16,8 +12,6 @@ extension Bit.Order {
         @Suite(.serialized) struct Performance {}
     }
 }
-
-// MARK: - Unit Tests
 
 extension Bit.Order.Test.Unit {
     @Test
