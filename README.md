@@ -1,11 +1,11 @@
-# Bit Primitives
+# Bit
 
 ![Development Status](https://img.shields.io/badge/status-active--development-blue.svg)
-[![CI](https://github.com/swift-primitives/swift-bit-primitives/actions/workflows/ci.yml/badge.svg)](https://github.com/swift-primitives/swift-bit-primitives/actions/workflows/ci.yml)
+[![CI](https://github.com/swift-molecules/swift-bit/actions/workflows/ci.yml/badge.svg)](https://github.com/swift-molecules/swift-bit/actions/workflows/ci.yml)
 
 `Bit` — a binary-digit value type with `.zero` / `.one` cases — and the complete two-element Boolean algebra (`&`, `|`, `^`, `~`, plus NAND / NOR / XNOR / AND-NOT) and Z₂ field (`+` is XOR, `×` is AND) defined over it. `@frozen`, `Sendable`, and `UInt8`-backed, with conformances to the institute's `Comparison.Protocol`, `Equation.Protocol`, and `Hash.Protocol` alongside the matching Swift stdlib protocols.
 
-A dedicated `Bit` type makes the {0, 1} domain a compile-time fact rather than a convention layered over `Bool` or a raw integer, and carries the algebraic structure that `swift-bit-vector-primitives` and GF(2) linear algebra build on.
+A dedicated `Bit` type makes the {0, 1} domain a compile-time fact rather than a convention layered over `Bool` or a raw integer, and carries the algebraic structure that `swift-bit-vector` and GF(2) linear algebra build on.
 
 ---
 
@@ -22,7 +22,7 @@ A dedicated `Bit` type makes the {0, 1} domain a compile-time fact rather than a
 ## Quick Start
 
 ```swift
-import Bit_Primitives
+import Bit
 
 let a: Bit = .one
 let b: Bit = .zero
@@ -58,7 +58,7 @@ Add the dependency to your `Package.swift`:
 
 ```swift
 dependencies: [
-    .package(url: "https://github.com/swift-primitives/swift-bit-primitives.git", branch: "main")
+    .package(url: "https://github.com/swift-molecules/swift-bit.git", branch: "main")
 ]
 ```
 
@@ -68,7 +68,7 @@ Add the umbrella product to your target:
 .target(
     name: "App",
     dependencies: [
-        .product(name: "Bit Primitives", package: "swift-bit-primitives")
+        .product(name: "Bit", package: "swift-bit")
     ]
 )
 ```
@@ -85,10 +85,10 @@ Three library products plus a Test Support target:
 
 | Product | Contents | When to import |
 |---------|----------|----------------|
-| `Bit Primitives` | Umbrella — `Bit` value type, all operations, the `Comparison` / `Equation` / `Hash` protocol conformances, and the stdlib integration | Most consumers |
+| `Bit` | Umbrella — `Bit` value type, all operations, the `Comparison` / `Equation` / `Hash` protocol conformances, and the stdlib integration | Most consumers |
 | `Bit Primitive` | The `Bit` enum, `Bit.Order`, and the Boolean / compound / Z₂ / bitwise operations (no stdlib bridge, no institute-protocol conformances) | Minimal surface |
-| `Bit Primitives Standard Library Integration` | `Comparable`, `Codable`, `CaseIterable`, `ExpressibleBy*Literal`, `CustomStringConvertible`, and `Cardinal`-typed shift operators on `FixedWidthInteger` | Pulled in transitively by the umbrella |
-| `Bit Primitives Test Support` | Re-export of upstream Test Support modules | Test target only |
+| `Bit Standard Library Integration` | `Comparable`, `Codable`, `CaseIterable`, `ExpressibleBy*Literal`, `CustomStringConvertible`, and `Cardinal`-typed shift operators on `FixedWidthInteger` | Pulled in transitively by the umbrella |
+| `Bit Test Support` | Re-export of upstream Test Support modules | Test target only |
 
 ---
 
@@ -112,11 +112,11 @@ Pre-1.0. The 0.1.0 surface — the `Bit` enum, its Boolean / compound / Z₂ ope
 
 ## Related Packages
 
-- [`swift-comparison-primitives`](https://github.com/swift-primitives/swift-comparison-primitives) — `Comparison.Protocol`, which `Bit` conforms to.
-- [`swift-equation-primitives`](https://github.com/swift-primitives/swift-equation-primitives) — `Equation.Protocol`, the equality protocol `Comparison.Protocol` refines.
-- [`swift-hash-primitives`](https://github.com/swift-primitives/swift-hash-primitives) — `Hash.Protocol`, which `Bit` conforms to.
-- [`swift-cardinal-primitives`](https://github.com/swift-primitives/swift-cardinal-primitives) — `Cardinal`, used by the typed shift operators in the Standard Library Integration product.
-- [`swift-carrier-primitives`](https://github.com/swift-primitives/swift-carrier-primitives) — `Carrier`, the phantom-typed wrapper those shift operators range over.
+- [`swift-comparison`](https://github.com/swift-molecules/swift-comparison) — `Comparison.Protocol`, which `Bit` conforms to.
+- [`swift-equation`](https://github.com/swift-molecules/swift-equation) — `Equation.Protocol`, the equality protocol `Comparison.Protocol` refines.
+- [`swift-hash`](https://github.com/swift-molecules/swift-hash) — `Hash.Protocol`, which `Bit` conforms to.
+- [`swift-cardinal`](https://github.com/swift-molecules/swift-cardinal) — `Cardinal`, used by the typed shift operators in the Standard Library Integration product.
+- [`swift-carrier`](https://github.com/swift-molecules/swift-carrier) — `Carrier`, the phantom-typed wrapper those shift operators range over.
 
 ---
 

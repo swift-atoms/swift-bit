@@ -1,3 +1,3 @@
-public import Hash_Primitives
+public import Hash
 
 extension Bit: Hash.`Protocol` {}

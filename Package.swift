@@ -3,7 +3,7 @@
 import PackageDescription
 
 let package = Package(
-    name: "swift-bit-primitives",
+    name: "swift-bit",
     platforms: [
         .macOS(.v27),
         .iOS(.v27),
@@ -17,36 +17,36 @@ let package = Package(
             targets: ["Bit Primitive"]
         ),
         .library(
-            name: "Bit Pattern Primitives",
-            targets: ["Bit Pattern Primitives"]
+            name: "Bit Pattern",
+            targets: ["Bit Pattern"]
         ),
         .library(
-            name: "Bit Primitives",
-            targets: ["Bit Primitives"]
+            name: "Bit",
+            targets: ["Bit"]
         ),
         .library(
-            name: "Bit Primitives Standard Library Integration",
-            targets: ["Bit Primitives Standard Library Integration"]
+            name: "Bit Standard Library Integration",
+            targets: ["Bit Standard Library Integration"]
         ),
         .library(
-            name: "Bit Primitives Test Support",
-            targets: ["Bit Primitives Test Support"]
+            name: "Bit Test Support",
+            targets: ["Bit Test Support"]
         ),
     ],
     dependencies: [
         .package(
-            url: "https://github.com/swift-primitives/swift-hash-primitives.git",
+            url: "https://github.com/swift-molecules/swift-hash.git",
             branch: "main"
         ),
     ],
     targets: [
         .target(
-            name: "Bit Primitives",
+            name: "Bit",
             dependencies: [
                 "Bit Primitive",
-                "Bit Pattern Primitives",
-                "Bit Primitives Standard Library Integration",
-                .product(name: "Hash Primitives", package: "swift-hash-primitives"),
+                "Bit Pattern",
+                "Bit Standard Library Integration",
+                .product(name: "Hash", package: "swift-hash"),
             ]
         ),
         .target(
@@ -55,31 +55,31 @@ let package = Package(
         ),
 
         .target(
-            name: "Bit Pattern Primitives",
+            name: "Bit Pattern",
             dependencies: [
                 "Bit Primitive"
             ]
         ),
         .target(
-            name: "Bit Primitives Standard Library Integration",
+            name: "Bit Standard Library Integration",
             dependencies: [
                 "Bit Primitive"
             ]
         ),
         .target(
-            name: "Bit Primitives Test Support",
+            name: "Bit Test Support",
             dependencies: [
-                "Bit Primitives"
+                "Bit"
             ],
             path: "Tests/Support"
         ),
         .testTarget(
-            name: "Bit Primitives Tests",
+            name: "Bit Tests",
             dependencies: [
-                "Bit Primitives",
-                "Bit Primitives Test Support",
+                "Bit",
+                "Bit Test Support",
             ],
-            path: "Tests/Bit Primitives Tests"
+            path: "Tests/Bit Tests"
         ),
     ],
     swiftLanguageModes: [.v6]

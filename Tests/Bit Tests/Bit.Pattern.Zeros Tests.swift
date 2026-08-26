@@ -1,7 +1,7 @@
-import Bit_Primitives_Test_Support
+import Bit_Test_Support
 import Testing
 
-@testable import Bit_Primitives
+@testable import Bit
 
 @Suite
 struct `Bit Pattern Zeros Tests` {
