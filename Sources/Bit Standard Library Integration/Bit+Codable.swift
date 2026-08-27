@@ -1,4 +1,4 @@
-import Bit_Primitive
+import Bit
 
 #if !hasFeature(Embedded)
     extension Bit: Codable {}

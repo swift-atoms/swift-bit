@@ -1,4 +1,3 @@
-import Bit_Test_Support
 import Testing
 
 @testable import Bit

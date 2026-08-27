@@ -13,14 +13,6 @@ let package = Package(
     ],
     products: [
         .library(
-            name: "Bit Primitive",
-            targets: ["Bit Primitive"]
-        ),
-        .library(
-            name: "Bit Pattern",
-            targets: ["Bit Pattern"]
-        ),
-        .library(
             name: "Bit",
             targets: ["Bit"]
         ),
@@ -29,56 +21,30 @@ let package = Package(
             targets: ["Bit Standard Library Integration"]
         ),
         .library(
-            name: "Bit Test Support",
-            targets: ["Bit Test Support"]
+            name: "Bit Apple Foundation Integration",
+            targets: ["Bit Apple Foundation Integration"]
         ),
     ],
-    dependencies: [
-        .package(
-            url: "https://github.com/swift-molecules/swift-hash.git",
-            branch: "main"
-        ),
-    ],
+    dependencies: [],
     targets: [
         .target(
             name: "Bit",
-            dependencies: [
-                "Bit Primitive",
-                "Bit Pattern",
-                "Bit Standard Library Integration",
-                .product(name: "Hash", package: "swift-hash"),
-            ]
-        ),
-        .target(
-            name: "Bit Primitive",
             dependencies: []
-        ),
-
-        .target(
-            name: "Bit Pattern",
-            dependencies: [
-                "Bit Primitive"
-            ]
         ),
         .target(
             name: "Bit Standard Library Integration",
-            dependencies: [
-                "Bit Primitive"
-            ]
+            dependencies: ["Bit"]
         ),
         .target(
-            name: "Bit Test Support",
+            name: "Bit Apple Foundation Integration",
             dependencies: [
-                "Bit"
-            ],
-            path: "Tests/Support"
+                "Bit",
+                "Bit Standard Library Integration",
+            ]
         ),
         .testTarget(
             name: "Bit Tests",
-            dependencies: [
-                "Bit",
-                "Bit Test Support",
-            ],
+            dependencies: ["Bit"],
             path: "Tests/Bit Tests"
         ),
     ],
