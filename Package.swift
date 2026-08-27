@@ -25,11 +25,38 @@ let package = Package(
             targets: ["Bit Apple Foundation Integration"]
         ),
     ],
-    dependencies: [],
+    dependencies: [
+        .package(
+            url: "https://github.com/swift-atoms/swift-index.git",
+            branch: "main"
+        ),
+        .package(
+            url: "https://github.com/swift-atoms/swift-affine.git",
+            branch: "main"
+        ),
+        .package(
+            url: "https://github.com/swift-atoms/swift-ordinal.git",
+            branch: "main"
+        ),
+        .package(
+            url: "https://github.com/swift-atoms/swift-byte.git",
+            branch: "main"
+        ),
+        .package(
+            url: "https://github.com/swift-atoms/swift-tagged.git",
+            branch: "main"
+        ),
+    ],
     targets: [
         .target(
             name: "Bit",
-            dependencies: []
+            dependencies: [
+                .product(name: "Index", package: "swift-index"),
+                .product(name: "Affine", package: "swift-affine"),
+                .product(name: "Ordinal", package: "swift-ordinal"),
+                .product(name: "Byte", package: "swift-byte"),
+                .product(name: "Tagged", package: "swift-tagged"),
+            ]
         ),
         .target(
             name: "Bit Standard Library Integration",
@@ -44,7 +71,15 @@ let package = Package(
         ),
         .testTarget(
             name: "Bit Tests",
-            dependencies: ["Bit"],
+            dependencies: [
+                "Bit",
+                "Bit Standard Library Integration",
+                .product(name: "Index", package: "swift-index"),
+                .product(name: "Affine", package: "swift-affine"),
+                .product(name: "Ordinal", package: "swift-ordinal"),
+                .product(name: "Byte", package: "swift-byte"),
+                .product(name: "Tagged", package: "swift-tagged"),
+            ],
             path: "Tests/Bit Tests"
         ),
     ],
