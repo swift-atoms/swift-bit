@@ -1,5 +1,4 @@
 import Bit_Test_Support
-import Bit_Standard_Library_Integration
 import Testing
 
 @testable import Bit

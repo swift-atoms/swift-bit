@@ -1,5 +1,4 @@
 import Bit_Test_Support
-import Bit_Standard_Library_Integration
 import Testing
 
 @testable import Bit
@@ -135,12 +134,6 @@ extension Bit.Test.Unit {
     func `init from Bool`() {
         #expect(Bit(true) == .one)
         #expect(Bit(false) == .zero)
-    }
-
-    @Test
-    func `Bool init from Bit`() {
-        #expect(Bool(Bit.one) == true)
-        #expect(Bool(Bit.zero) == false)
     }
 
     @Test

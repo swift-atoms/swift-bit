@@ -1,8 +1,9 @@
-public import Bit
+extension Bit.Order: CaseIterable {
+
+    public static let allCases: [Bit.Order] = [.msb, .lsb]
+}
 
 #if !hasFeature(Embedded)
-    extension Bit: Codable {}
-
     extension Bit.Order: Codable {
 
         public init(from decoder: any Decoder) throws {

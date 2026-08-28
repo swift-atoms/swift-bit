@@ -60,10 +60,16 @@ let package = Package(
             dependencies: [
                 .target(name: "Bit"),
                 .target(name: "Bit Pattern"),
-                .target(name: "Bit Standard Library Integration"),
                 .target(name: "Bit Test Support"),
             ],
             path: "Tests/Bit Tests"
+        ),
+        .testTarget(
+            name: "Bit Standard Library Integration Tests",
+            dependencies: [
+                .target(name: "Bit"),
+                .target(name: "Bit Standard Library Integration"),
+            ]
         ),
     ],
     swiftLanguageModes: [.v6]
