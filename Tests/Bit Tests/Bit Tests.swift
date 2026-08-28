@@ -1,7 +1,7 @@
+import Bit_Test_Support
 import Testing
 
 @testable import Bit
-import Bit_Standard_Library_Integration
 
 extension Bit {
     @Suite

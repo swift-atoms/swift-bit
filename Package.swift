@@ -13,6 +13,14 @@ let package = Package(
     ],
     products: [
         .library(
+            name: "Bit Primitive",
+            targets: ["Bit Primitive"]
+        ),
+        .library(
+            name: "Bit Pattern",
+            targets: ["Bit Pattern"]
+        ),
+        .library(
             name: "Bit",
             targets: ["Bit"]
         ),
@@ -21,29 +29,13 @@ let package = Package(
             targets: ["Bit Standard Library Integration"]
         ),
         .library(
-            name: "Bit Apple Foundation Integration",
-            targets: ["Bit Apple Foundation Integration"]
+            name: "Bit Test Support",
+            targets: ["Bit Test Support"]
         ),
     ],
     dependencies: [
         .package(
-            url: "https://github.com/swift-atoms/swift-index.git",
-            branch: "main"
-        ),
-        .package(
-            url: "https://github.com/swift-atoms/swift-affine.git",
-            branch: "main"
-        ),
-        .package(
-            url: "https://github.com/swift-atoms/swift-ordinal.git",
-            branch: "main"
-        ),
-        .package(
-            url: "https://github.com/swift-atoms/swift-byte.git",
-            branch: "main"
-        ),
-        .package(
-            url: "https://github.com/swift-atoms/swift-tagged.git",
+            url: "https://github.com/swift-molecules/swift-hash.git",
             branch: "main"
         ),
     ],
@@ -51,34 +43,41 @@ let package = Package(
         .target(
             name: "Bit",
             dependencies: [
-                .product(name: "Index", package: "swift-index"),
-                .product(name: "Affine", package: "swift-affine"),
-                .product(name: "Ordinal", package: "swift-ordinal"),
-                .product(name: "Byte", package: "swift-byte"),
-                .product(name: "Tagged", package: "swift-tagged"),
+                "Bit Primitive",
+                "Bit Pattern",
+                "Bit Standard Library Integration",
+                .product(name: "Hash", package: "swift-hash"),
+            ]
+        ),
+        .target(
+            name: "Bit Primitive",
+            dependencies: []
+        ),
+
+        .target(
+            name: "Bit Pattern",
+            dependencies: [
+                "Bit Primitive"
             ]
         ),
         .target(
             name: "Bit Standard Library Integration",
-            dependencies: ["Bit"]
+            dependencies: [
+                "Bit Primitive"
+            ]
         ),
         .target(
-            name: "Bit Apple Foundation Integration",
+            name: "Bit Test Support",
             dependencies: [
-                "Bit",
-                "Bit Standard Library Integration",
-            ]
+                "Bit"
+            ],
+            path: "Tests/Support"
         ),
         .testTarget(
             name: "Bit Tests",
             dependencies: [
                 "Bit",
-                "Bit Standard Library Integration",
-                .product(name: "Index", package: "swift-index"),
-                .product(name: "Affine", package: "swift-affine"),
-                .product(name: "Ordinal", package: "swift-ordinal"),
-                .product(name: "Byte", package: "swift-byte"),
-                .product(name: "Tagged", package: "swift-tagged"),
+                "Bit Test Support",
             ],
             path: "Tests/Bit Tests"
         ),

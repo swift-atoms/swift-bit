@@ -1,4 +1,4 @@
-import Bit
+import Bit_Primitive
 
 extension Bit.Order: CaseIterable {
 
