@@ -13,10 +13,6 @@ let package = Package(
     ],
     products: [
         .library(
-            name: "Bit Primitive",
-            targets: ["Bit Primitive"]
-        ),
-        .library(
             name: "Bit Pattern",
             targets: ["Bit Pattern"]
         ),
@@ -33,51 +29,37 @@ let package = Package(
             targets: ["Bit Test Support"]
         ),
     ],
-    dependencies: [
-        .package(
-            url: "https://github.com/swift-molecules/swift-hash.git",
-            branch: "main"
-        ),
-    ],
+    dependencies: [],
     targets: [
         .target(
             name: "Bit",
-            dependencies: [
-                "Bit Primitive",
-                "Bit Pattern",
-                "Bit Standard Library Integration",
-                .product(name: "Hash", package: "swift-hash"),
-            ]
-        ),
-        .target(
-            name: "Bit Primitive",
             dependencies: []
         ),
 
         .target(
             name: "Bit Pattern",
             dependencies: [
-                "Bit Primitive"
+                .target(name: "Bit")
             ]
         ),
         .target(
             name: "Bit Standard Library Integration",
             dependencies: [
-                "Bit Primitive"
+                .target(name: "Bit")
             ]
         ),
         .target(
             name: "Bit Test Support",
             dependencies: [
-                "Bit"
+                .target(name: "Bit")
             ],
             path: "Tests/Support"
         ),
         .testTarget(
             name: "Bit Tests",
             dependencies: [
-                "Bit",
-                "Bit Test Support",
+                .target(name: "Bit"),
+                .target(name: "Bit Test Support"),
             ],
             path: "Tests/Bit Tests"
         ),
