@@ -1,3 +1,5 @@
+public import Bit
+
 extension Bit.Pattern {
 
     public struct Mask: Sendable, Equatable, Hashable {

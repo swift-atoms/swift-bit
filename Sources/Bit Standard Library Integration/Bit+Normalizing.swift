@@ -1,4 +1,4 @@
-import Bit
+public import Bit
 
 extension Bit {
 

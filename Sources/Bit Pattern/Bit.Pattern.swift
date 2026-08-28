@@ -1,3 +1,5 @@
+public import Bit
+
 extension Bit {
 
     public enum Pattern<Carrier: FixedWidthInteger & UnsignedInteger & Sendable> {}

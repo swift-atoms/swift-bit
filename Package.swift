@@ -59,6 +59,8 @@ let package = Package(
             name: "Bit Tests",
             dependencies: [
                 .target(name: "Bit"),
+                .target(name: "Bit Pattern"),
+                .target(name: "Bit Standard Library Integration"),
                 .target(name: "Bit Test Support"),
             ],
             path: "Tests/Bit Tests"

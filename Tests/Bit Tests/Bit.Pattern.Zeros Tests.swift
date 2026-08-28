@@ -1,4 +1,5 @@
 import Bit_Test_Support
+import Bit_Pattern
 import Testing
 
 @testable import Bit

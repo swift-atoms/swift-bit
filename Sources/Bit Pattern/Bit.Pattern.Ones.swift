@@ -1,3 +1,5 @@
+public import Bit
+
 extension Bit.Pattern {
 
     public struct Ones: Sendable {
