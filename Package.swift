@@ -13,20 +13,12 @@ let package = Package(
     ],
     products: [
         .library(
-            name: "Bit Pattern",
-            targets: ["Bit Pattern"]
-        ),
-        .library(
             name: "Bit",
             targets: ["Bit"]
         ),
         .library(
             name: "Bit Standard Library Integration",
             targets: ["Bit Standard Library Integration"]
-        ),
-        .library(
-            name: "Bit Test Support",
-            targets: ["Bit Test Support"]
         ),
     ],
     dependencies: [],
@@ -35,32 +27,16 @@ let package = Package(
             name: "Bit",
             dependencies: []
         ),
-
-        .target(
-            name: "Bit Pattern",
-            dependencies: [
-                .target(name: "Bit")
-            ]
-        ),
         .target(
             name: "Bit Standard Library Integration",
             dependencies: [
                 .target(name: "Bit")
             ]
         ),
-        .target(
-            name: "Bit Test Support",
-            dependencies: [
-                .target(name: "Bit")
-            ],
-            path: "Tests/Support"
-        ),
         .testTarget(
             name: "Bit Tests",
             dependencies: [
-                .target(name: "Bit"),
-                .target(name: "Bit Pattern"),
-                .target(name: "Bit Test Support"),
+                .target(name: "Bit")
             ],
             path: "Tests/Bit Tests"
         ),

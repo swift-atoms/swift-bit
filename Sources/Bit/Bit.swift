@@ -1,12 +1,15 @@
 @frozen
-public enum Bit: UInt8, Sendable, Hashable, Equatable {
+public enum Bit {
 
-    case zero = 0
+    case zero
 
-    case one = 1
+    case one
+}
 
-    @inlinable
-    public init?(_ value: UInt8) {
-        self.init(rawValue: value)
-    }
+extension Bit: Equatable {}
+
+extension Bit: Hashable {}
+
+extension Bit: CaseIterable {
+    public static var allCases: [Bit] { [.zero, .one] }
 }
