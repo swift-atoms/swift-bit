@@ -1,8 +1,7 @@
 # .github/metadata.yaml
-# Triaged by AI-assisted bulk pass (2026-04-29).
-description: "Binary-digit value type with a full Boolean algebra and Z2 field arithmetic for Swift."
+description: "The two-valued binary digit for Swift."
 topics:
-  - molecules
+  - atoms
   - bit
 homepage: "https://swift-institute.org"
 readme:
