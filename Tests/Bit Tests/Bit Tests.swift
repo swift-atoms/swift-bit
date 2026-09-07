@@ -4,15 +4,15 @@ import Testing
 
 extension Bit {
     @Suite
-    enum Test {
-        @Suite struct Unit {}
-        @Suite struct `Edge Case` {}
-        @Suite struct Integration {}
-        @Suite(.serialized) struct Performance {}
+    enum `Bits preserve binary values and compact storage` {
+        @Suite struct `Bit layout equality and iteration preserve both cases` {}
+        @Suite struct `No additional bit edge cases are defined` {}
+        @Suite struct `No additional bit integration cases are defined` {}
+        @Suite(.serialized) struct `No bit performance cases are defined` {}
     }
 }
 
-extension Bit.Test.Unit {
+extension Bit.`Bits preserve binary values and compact storage`.`Bit layout equality and iteration preserve both cases` {
     @Test
     func `memory layout is exactly one byte`() {
         #expect(MemoryLayout<Bit>.size == 1)

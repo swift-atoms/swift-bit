@@ -2,7 +2,7 @@ import Bit
 import Testing
 
 @Suite
-struct `Swift.Bool Bit Integration Tests` {
+struct `Boolean and bit values convert in both directions` {
 
     @Test
     func `Bool initializes from Bit`() {
