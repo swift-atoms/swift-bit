@@ -6,10 +6,6 @@ public enum Bit {
     case one
 }
 
-extension Bit: Equatable {}
+extension Bit: Swift.Equatable {}
 
-extension Bit: Hashable {}
-
-extension Bit: CaseIterable {
-    public static var allCases: [Bit] { [.zero, .one] }
-}
+extension Bit: Swift.Hashable {}

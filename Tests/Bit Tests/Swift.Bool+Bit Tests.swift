@@ -1,5 +1,4 @@
 import Bit
-import Bit_Standard_Library_Integration
 import Testing
 
 @Suite

@@ -1,6 +1,4 @@
-public import Bit
-
-extension Bool {
+extension Swift.Bool {
 
     @inlinable
     public init(_ bit: Bit) {
