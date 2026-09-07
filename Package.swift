@@ -12,47 +12,57 @@ let package = Package(
         .visionOS(.v27),
     ],
     products: [
-        .library(
-            name: "Bit",
-            targets: ["Bit"]
-        ),
-        .library(
-            name: "Bit Standard Library Integration",
-            targets: ["Bit Standard Library Integration"]
-        ),
+        .library(name: "Bit", targets: ["Bit"]),
+        .library(name: "Bit Standard Library Integration", targets: ["Bit Standard Library Integration"]),
+        .library(name: "Bit Foundation Library Integration", targets: ["Bit Foundation Library Integration"]),
+        .library(name: "Bit Test Support", targets: ["Bit Test Support"]),
     ],
     dependencies: [],
     targets: [
         .target(
             name: "Bit",
-            dependencies: []
+            dependencies: [
+            ],
+            path: "Sources/Bit"
         ),
         .target(
             name: "Bit Standard Library Integration",
             dependencies: [
-                .target(name: "Bit")
-            ]
+                .target(name: "Bit"),
+            ],
+            path: "Sources/Bit Standard Library Integration"
+        ),
+        .target(
+            name: "Bit Foundation Library Integration",
+            dependencies: [
+                .target(name: "Bit"),
+                .target(name: "Bit Standard Library Integration"),
+            ],
+            path: "Sources/Bit Foundation Library Integration"
+        ),
+        .target(
+            name: "Bit Test Support",
+            dependencies: [
+                .target(name: "Bit"),
+            ],
+            path: "Tests/Support"
         ),
         .testTarget(
             name: "Bit Tests",
             dependencies: [
-                .target(name: "Bit")
-            ],
-            path: "Tests/Bit Tests"
-        ),
-        .testTarget(
-            name: "Bit Standard Library Integration Tests",
-            dependencies: [
                 .target(name: "Bit"),
                 .target(name: "Bit Standard Library Integration"),
-            ]
+                .target(name: "Bit Test Support"),
+                .target(name: "Bit Foundation Library Integration"),
+            ],
+            path: "Tests/Bit Tests"
         ),
     ],
     swiftLanguageModes: [.v6]
 )
 
-for target in package.targets where ![.system, .binary, .plugin, .macro].contains(target.type) {
-    let ecosystem: [SwiftSetting] = [
+for target in package.targets {
+    target.swiftSettings = [
         .strictMemorySafety(),
         .enableUpcomingFeature("ExistentialAny"),
         .enableUpcomingFeature("InternalImportsByDefault"),
@@ -61,8 +71,4 @@ for target in package.targets where ![.system, .binary, .plugin, .macro].contain
         .enableExperimentalFeature("Lifetimes"),
         .enableUpcomingFeature("InferIsolatedConformances"),
     ]
-
-    let package: [SwiftSetting] = []
-
-    target.swiftSettings = (target.swiftSettings ?? []) + ecosystem + package
 }
