@@ -17,11 +17,15 @@ let package = Package(
         .library(name: "Bit Foundation Integration", targets: ["Bit Foundation Integration"]),
         .library(name: "Bit Test Support", targets: ["Bit Test Support"]),
     ],
-    dependencies: [],
+    dependencies: [
+
+        .package(url: "https://github.com/swift-atoms/swift-hash.git", branch: "main"),
+],
     targets: [
         .target(
             name: "Bit",
             dependencies: [
+                .product(name: "Hash", package: "swift-hash"),
             ],
             path: "Sources/Bit"
         ),
@@ -48,6 +52,15 @@ let package = Package(
                 .target(name: "Bit Foundation Integration"),
             ],
             path: "Tests/Bit Tests"
+        ),
+        .testTarget(
+            name: "Consolidated Bit Hash Tests",
+            dependencies: [
+
+                .target(name: "Bit"),
+                .product(name: "Hash", package: "swift-hash"),
+            ],
+            path: "Tests/Consolidated swift-bit-hash"
         ),
     ],
     swiftLanguageModes: [.v6]
