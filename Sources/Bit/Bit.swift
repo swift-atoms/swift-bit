@@ -1,5 +1,5 @@
 @frozen
-public enum Bit {
+public enum Bit: Swift.Sendable {
 
     case zero
 
