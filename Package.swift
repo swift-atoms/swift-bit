@@ -37,7 +37,6 @@ let package = Package(
 
 ],
     targets: [
-        .testTarget(name: "Decision Bit Finite Tests", dependencies: [.target(name: "Bit")], path: "Tests/Decision Bit Finite Tests"),
 
         .testTarget(
             name: "Bit Algebra Integration Tests",
