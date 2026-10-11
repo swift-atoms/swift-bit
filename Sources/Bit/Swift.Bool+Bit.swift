@@ -1,4 +1,4 @@
-extension Swift.Bool {
+extension Swift::Bool {
 
     @inlinable
     public init(_ bit: Bit) {
