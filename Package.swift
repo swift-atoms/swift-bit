@@ -35,7 +35,7 @@ let package = Package(
 
         .package(url: "https://github.com/swift-atoms/swift-algebra.git", branch: "main"),
 
-],
+    ],
     targets: [
 
         .testTarget(
@@ -43,24 +43,52 @@ let package = Package(
             dependencies: [
                 .target(name: "Bit"),
                 .target(name: "Bit Test Support"),
-                .product(name: "Algebra", package: "swift-algebra", condition: .when(traits: ["Algebra"])),
+                .product(
+                    name: "Algebra",
+                    package: "swift-algebra",
+                    condition: .when(traits: ["Algebra"])
+                ),
             ],
             path: "Tests/Bit Algebra Integration Tests"
         ),
         .target(
             name: "Bit",
             dependencies: [
-                .product(name: "Tagged", package: "swift-tagged", condition: .when(traits: ["Finite"])),
+                .product(
+                    name: "Tagged",
+                    package: "swift-tagged",
+                    condition: .when(traits: ["Finite"])
+                ),
 
-                .product(name: "Ordinal", package: "swift-ordinal", condition: .when(traits: ["Finite"])),
+                .product(
+                    name: "Ordinal",
+                    package: "swift-ordinal",
+                    condition: .when(traits: ["Finite"])
+                ),
 
-                .product(name: "Index", package: "swift-index", condition: .when(traits: ["Finite"])),
+                .product(
+                    name: "Index",
+                    package: "swift-index",
+                    condition: .when(traits: ["Finite"])
+                ),
 
-                .product(name: "Cardinal", package: "swift-cardinal", condition: .when(traits: ["Finite"])),
+                .product(
+                    name: "Cardinal",
+                    package: "swift-cardinal",
+                    condition: .when(traits: ["Finite"])
+                ),
 
-                .product(name: "Finite", package: "swift-finite", condition: .when(traits: ["Finite"])),
+                .product(
+                    name: "Finite",
+                    package: "swift-finite",
+                    condition: .when(traits: ["Finite"])
+                ),
 
-                .product(name: "Algebra", package: "swift-algebra", condition: .when(traits: ["Algebra"])),
+                .product(
+                    name: "Algebra",
+                    package: "swift-algebra",
+                    condition: .when(traits: ["Algebra"])
+                ),
             ],
             path: "Sources/Bit"
         ),
@@ -68,14 +96,14 @@ let package = Package(
         .target(
             name: "Bit Foundation Integration",
             dependencies: [
-                .target(name: "Bit"),
+                .target(name: "Bit")
             ],
             path: "Sources/Bit Foundation Integration"
         ),
         .target(
             name: "Bit Test Support",
             dependencies: [
-                .target(name: "Bit"),
+                .target(name: "Bit")
             ],
             path: "Tests/Support"
         ),
@@ -92,14 +120,15 @@ let package = Package(
 )
 
 for target in package.targets where ![.system, .binary, .plugin, .macro].contains(target.type) {
-    target.swiftSettings = (target.swiftSettings ?? []) + [
-        .strictMemorySafety(),
-        .enableUpcomingFeature("ExistentialAny"),
-        .enableUpcomingFeature("InternalImportsByDefault"),
-        .enableUpcomingFeature("MemberImportVisibility"),
-        .enableUpcomingFeature("NonisolatedNonsendingByDefault"),
-        .enableUpcomingFeature("InferIsolatedConformances"),
-        .enableExperimentalFeature("Lifetimes"),
-        .treatAllWarnings(as: .error),
-    ]
+    target.swiftSettings =
+        (target.swiftSettings ?? []) + [
+            .strictMemorySafety(),
+            .enableUpcomingFeature("ExistentialAny"),
+            .enableUpcomingFeature("InternalImportsByDefault"),
+            .enableUpcomingFeature("MemberImportVisibility"),
+            .enableUpcomingFeature("NonisolatedNonsendingByDefault"),
+            .enableUpcomingFeature("InferIsolatedConformances"),
+            .enableExperimentalFeature("Lifetimes"),
+            .treatAllWarnings(as: .error),
+        ]
 }

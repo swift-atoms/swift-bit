@@ -1,11 +1,11 @@
 #if Algebra
-public import Algebra
+    public import Algebra
 
-extension Algebra.Lattice where Element == Bit {
+    extension Algebra.Lattice where Element == Bit {
 
-    @inlinable
-    public init() {
-        self.init(join: .disjunction, meet: .conjunction)
+        @inlinable
+        public init() {
+            self.init(join: .disjunction, meet: .conjunction)
+        }
     }
-}
 #endif

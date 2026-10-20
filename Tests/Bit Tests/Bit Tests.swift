@@ -12,7 +12,9 @@ extension Bit {
     }
 }
 
-extension Bit.`Bits preserve binary values and compact storage`.`Bit layout equality and iteration preserve both cases` {
+extension Bit.`Bits preserve binary values and compact storage`
+    .`Bit layout equality and iteration preserve both cases`
+{
     @Test
     func `memory layout is exactly one byte`() {
         #expect(MemoryLayout<Bit>.size == 1)
