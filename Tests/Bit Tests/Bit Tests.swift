@@ -2,7 +2,9 @@ import Testing
 
 @testable import Bit
 
-extension Bit {
+enum `Bit Tests` {}
+
+extension `Bit Tests` {
     @Suite
     enum `Bits preserve binary values and compact storage` {
         @Suite struct `Bit layout equality and iteration preserve both cases` {}
@@ -12,7 +14,7 @@ extension Bit {
     }
 }
 
-extension Bit.`Bits preserve binary values and compact storage`
+extension `Bit Tests`.`Bits preserve binary values and compact storage`
     .`Bit layout equality and iteration preserve both cases`
 {
     @Test
