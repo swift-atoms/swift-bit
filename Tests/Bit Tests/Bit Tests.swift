@@ -7,11 +7,17 @@ enum `Bit Tests` {}
 extension `Bit Tests` {
     @Suite
     enum `Bits preserve binary values and compact storage` {
-        @Suite struct `Bit layout equality and iteration preserve both cases` {}
-        @Suite struct `No additional bit edge cases are defined` {}
-        @Suite struct `No additional bit integration cases are defined` {}
-        @Suite(.serialized) struct `No bit performance cases are defined` {}
     }
+}
+
+extension `Bit Tests`.`Bits preserve binary values and compact storage` {
+    @Suite struct `Bit layout equality and iteration preserve both cases` {}
+
+    @Suite struct `No additional bit edge cases are defined` {}
+
+    @Suite struct `No additional bit integration cases are defined` {}
+
+    @Suite(.serialized) struct `No bit performance cases are defined` {}
 }
 
 extension `Bit Tests`.`Bits preserve binary values and compact storage`

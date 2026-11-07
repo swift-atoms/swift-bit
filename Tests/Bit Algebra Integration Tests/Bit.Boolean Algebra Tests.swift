@@ -3,20 +3,24 @@
     import Bit
     import Testing
 
-    @Suite struct `Bit Boolean Algebra Tests` {
-        @Suite struct Unit {
-            @Suite struct Monoid {}
-            @Suite struct Semiring {}
-            @Suite struct Semilattice {}
-            @Suite struct Lattice {}
+enum `Bit.Boolean Algebra Tests` {}
+
+extension `Bit.Boolean Algebra Tests` {
+        @Suite struct `Bit Boolean Algebra Tests` {
+            @Suite struct Unit {
+                @Suite struct Monoid {}
+                @Suite struct Semiring {}
+                @Suite struct Semilattice {}
+                @Suite struct Lattice {}
+            }
+
+            @Suite struct `Edge Case` {}
+
+            @Suite struct Integration {}
         }
+}
 
-        @Suite struct `Edge Case` {}
-
-        @Suite struct Integration {}
-    }
-
-    extension `Bit Boolean Algebra Tests`.Unit.Monoid {
+    extension `Bit.Boolean Algebra Tests`.`Bit Boolean Algebra Tests`.Unit.Monoid {
         @Test
         func `conjunction monoid has identity one and combines with AND`() {
             let m = Algebra.Monoid<Bit>.conjunction
@@ -36,7 +40,7 @@
         }
     }
 
-    extension `Bit Boolean Algebra Tests`.Unit.Semiring {
+    extension `Bit.Boolean Algebra Tests`.`Bit Boolean Algebra Tests`.Unit.Semiring {
         @Test
         func `boolean semiring zero is .zero and one is .one`() {
             let sr = Algebra.Semiring<Bit>.Commutative()
@@ -54,7 +58,7 @@
         }
     }
 
-    extension `Bit Boolean Algebra Tests`.Unit.Semilattice {
+    extension `Bit.Boolean Algebra Tests`.`Bit Boolean Algebra Tests`.Unit.Semilattice {
         @Test
         func `disjunction semilattice has identity zero`() {
             let or = Algebra.Semilattice<Bit>.disjunction
@@ -87,7 +91,7 @@
         }
     }
 
-    extension `Bit Boolean Algebra Tests`.Unit.Lattice {
+    extension `Bit.Boolean Algebra Tests`.`Bit Boolean Algebra Tests`.Unit.Lattice {
         @Test
         func `bit lattice: join is OR, meet is AND`() {
             let l = Algebra.Lattice<Bit>()
