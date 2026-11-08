@@ -1,3 +1,3 @@
 #if Algebra
-    public import Algebra
+    import Algebra
 #endif
