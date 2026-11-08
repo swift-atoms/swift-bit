@@ -2,9 +2,9 @@
     import Bit
     import Testing
 
-enum `Bit.Finite.Enumerable Tests` {}
+    enum `Bit.Finite.Enumerable Tests` {}
 
-extension `Bit.Finite.Enumerable Tests` {
+    extension `Bit.Finite.Enumerable Tests` {
         @Suite struct `Bit Finite.Enumerable Tests` {
             @Suite struct Unit {
                 @Suite struct `Bit Value` {}
@@ -15,7 +15,7 @@ extension `Bit.Finite.Enumerable Tests` {
 
             @Suite struct Integration {}
         }
-}
+    }
 
     extension `Bit.Finite.Enumerable Tests`.`Bit Finite.Enumerable Tests`.Unit.`Bit Value` {
         @Test

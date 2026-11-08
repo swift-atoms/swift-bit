@@ -3,9 +3,9 @@
     import Bit
     import Testing
 
-enum `Bit.Boolean Algebra Tests` {}
+    enum `Bit.Boolean Algebra Tests` {}
 
-extension `Bit.Boolean Algebra Tests` {
+    extension `Bit.Boolean Algebra Tests` {
         @Suite struct `Bit Boolean Algebra Tests` {
             @Suite struct Unit {
                 @Suite struct Monoid {}
@@ -18,7 +18,7 @@ extension `Bit.Boolean Algebra Tests` {
 
             @Suite struct Integration {}
         }
-}
+    }
 
     extension `Bit.Boolean Algebra Tests`.`Bit Boolean Algebra Tests`.Unit.Monoid {
         @Test
