@@ -1,3 +1,3 @@
 #if Algebra
-    @_exported public import Algebra
+    public import Algebra
 #endif
